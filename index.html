@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام إدارة وتدقيق نتائج الطلاب</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome للأيقونات الاحترافية -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Cairo) لخط عربي أنيق واحترافي -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- شريط علوي رسمي ونظيف -->
+    <nav class="navbar navbar-dark bg-dark shadow-sm py-3 mb-5">
+        <div class="container">
+            <span class="navbar-brand mb-0 h1 fw-bold">
+                <i class="fa-solid fa-graduation-cap text-primary ms-2"></i> نظام إدارة وتدقيق نتائج الطلاب الأكاديمي
+            </span>
+        </div>
+    </nav>
+
+    <div class="container mb-5">
+        <div class="row g-4">
+            
+            <!-- نموذج إدخال بيانات الطالب -->
+            <div class="col-lg-4">
+                <div class="card p-4 bg-white">
+                    <h4 class="fw-bold text-dark mb-4 border-bottom pb-3">
+                        <i class="fa-solid fa-user-plus text-primary ms-2"></i> تسجيل طالب جديد
+                    </h4>
+                    
+                    <!-- صندوق رسائل الخطأ -->
+                    <div id="errorBox" class="alert alert-danger d-none py-2 px-3 small rounded-3 mb-3" role="alert"></div>
+
+                    <form id="studentForm">
+                        <div class="mb-3">
+                            <label class="form-label text-muted fw-semibold small">اسم الطالب الكامل</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0"><i class="fa-solid fa-user text-secondary"></i></span>
+                                <input type="text" id="studentName" class="form-control border-start-0 bg-light" placeholder="مثال: أحمد محمد علي">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label text-muted fw-semibold small">درجة المادة الأولى</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0"><i class="fa-solid fa-book text-secondary"></i></span>
+                                <input type="number" id="grade1" class="form-control border-start-0 bg-light" placeholder="0 - 100">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label text-muted fw-semibold small">درجة المادة الثانية</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0"><i class="fa-solid fa-book text-secondary"></i></span>
+                                <input type="number" id="grade2" class="form-control border-start-0 bg-light" placeholder="0 - 100">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label text-muted fw-semibold small">درجة المادة الثالثة</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0"><i class="fa-solid fa-book text-secondary"></i></span>
+                                <input type="number" id="grade3" class="form-control border-start-0 bg-light" placeholder="0 - 100">
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label text-muted fw-semibold small">نسبة الحضور (%)</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0"><i class="fa-solid fa-percent text-secondary"></i></span>
+                                <input type="number" id="attendance" class="form-control border-start-0 bg-light" placeholder="0 - 100">
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="button" id="addBtn" class="btn btn-primary py-2 fw-bold shadow-sm">
+                                <i class="fa-solid fa-floppy-disk ms-1"></i> حفظ وتسجيل الطالب
+                            </button>
+                            <button type="button" id="graceBtn" class="btn btn-warning py-2 fw-bold text-dark shadow-sm">
+                                <i class="fa-solid fa-wand-magic-sparkles ms-1"></i> تفعيل لجنة الرأفة الآلية
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- جداول العرض والتقارير -->
+            <div class="col-lg-8">
+                <!-- سجل الطلاب -->
+                <div class="card p-4 bg-white mb-4">
+                    <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-3">
+                        <h4 class="fw-bold text-dark m-0">
+                            <i class="fa-solid fa-users-rectangle text-primary ms-2"></i> سجل الطلاب المضافين
+                        </h4>
+                        <span class="badge bg-light text-dark border px-3 py-2" id="studentCountBadge">العدد: 0</span>
+                    </div>
+                    <div id="studentsListContainer" class="table-responsive">
+                        <div class="text-center py-5 text-muted">
+                            <i class="fa-solid fa-folder-open fa-3x mb-3 text-secondary opacity-50"></i>
+                            <p class="m-0">لم يتم إدخال أي بيانات للطلاب حتى الآن.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- تقرير لجنة الرأفة -->
+                <div class="card p-4 bg-dark text-white">
+                    <h4 class="fw-bold text-warning border-bottom border-secondary pb-3 mb-3">
+                        <i class="fa-solid fa-chart-line ms-2"></i> التقرير التحليلي للجنة الرأفة الأكاديمية
+                    </h4>
+                    <div id="graceReportContainer">
+                        <div class="text-center py-4 text-light opacity-75">
+                            <i class="fa-solid fa-triangle-exclamation fa-2x mb-2"></i>
+                            <p class="m-0">لم يتم تفعيل لجنة الرأفة بعد. اضغط على زر التفعيل لعرض النتائج.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ربط ملف الجافاسكريبت الرئيسي -->
+    <script src="js/main.js"></script>
+</body>
+</html>
